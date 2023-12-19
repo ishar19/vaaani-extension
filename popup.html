@@ -3,42 +3,60 @@
   <head>
     <title>YouTube URL Reader</title>
     <link rel="stylesheet" type="text/css" href="popup.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;400;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@200;400;800&display=swap"
+      rel="stylesheet"
+    />
     <style>
-      body{
-        font-family: 'JetBrains Mono', monospace;
+      body {
+        font-family: "JetBrains Mono", monospace;
       }
     </style>
     <script src="multiselect.js"></script>
   </head>
   <body>
-    <div class="logo"> 
-      <img src="./images/logo.png" alt="logo">
+    <div class="logo">
+      <img src="./images/logo.png" alt="logo" />
       <h1 class="header">Vaaani</h1>
     </div>
 
     <p id="currentURL"></p>
 
     <script src="popup.js"></script>
+    <script src="multiselect.js"></script>
 
-    <div class="multiselect" id="languages" multiple="multiple" data-target="multi-0">
-      <div class="title noselect">
-          <span class="text">Select languages</span>
-          <span class="close-icon">&times;</span>
-          <span class="expand-icon">&plus;</span>
+    <div
+      class="multiselect"
+      id="languages"
+      multiple="multiple"
+      data-target="multi-0"
+    >
+      <!-- <div class="title noselect">
+        <span class="text">Select languages</span>
+        <span class="close-icon">&times;</span>
+        <span class="expand-icon">&plus;</span>
+      </div> -->
+      <div class="custom-dropdown" id="customDropdown">
+        <div class="selected-options" style="text-align: center">
+          Select languages
+        </div>
+        <ul class="options">
+          <li data-value="hindi">Hindi</li>
+          <li data-value="bengali">Bengali</li>
+          <li data-value="marathi">Marathi</li>
+          <li data-value="tamil">Tamil</li>
+          <li data-value="telugu">Telugu</li>
+          <li data-value="urdu">Urdu</li>
+          <li data-value="assamese">Assamese</li>
+          <li data-value="ch"></li>
+          <li data-value="jp">Japan</li>
+        </ul>
       </div>
-      <div class="container">
-          <option value="hindi">Hindi</option>
-          <option value="bengali">Bengali</option>
-          <option value="marathi">Marathi</option>
-          <option value="tamil">Tamil</option>
-          <option value="telugu">Telugu</option>
-          <option value="urdu">Urdu</option>
-          <option value="assamese">Assamese</option>
-          <option value="ch"></option>
-          <option value="jp">Japan</option>
-      </div>
+      <div class="selected-options" id="selectedLanguages"></div>
+    </div>
+    <div class="button_container">
+      <button class="button" id="submit">Submit</button>
     </div>
     <!-- <img src="images/design.png" alt="design" class="bg"> -->
   </body>

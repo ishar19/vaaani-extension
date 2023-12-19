@@ -1,150 +1,150 @@
-Array.prototype.search = function(elem) {
-    for(var i = 0; i < this.length; i++) {
-        if(this[i] == elem) return i;
-    }
-    
-    return -1;
-};
+// Array.prototype.search = function(elem) {
+//     for(var i = 0; i < this.length; i++) {
+//         if(this[i] == elem) return i;
+//     }
 
-var Multiselect = function(selector) {
-    if(!$(selector)) {
-        console.error("ERROR: Element %s does not exist.", selector);
-        return;
-    }
+//     return -1;
+// };
 
-    this.selector = selector;
-    this.selections = [];
+// var Multiselect = function(selector) {
+//     if(!$(selector)) {
+//         console.error("ERROR: Element %s does not exist.", selector);
+//         return;
+//     }
 
-    (function(that) {
-        that.events();
-    })(this);
-};
+//     this.selector = selector;
+//     this.selections = [];
 
-Multiselect.prototype = {
-    open: function(that) {
-        var target = $(that).parent().attr("data-target");
+//     (function(that) {
+//         that.events();
+//     })(this);
+// };
 
-        // If we are not keeping track of this one's entries, then
-        // start doing so.
-        if(!this.selections) {
-            this.selections = [ ];
-        }
+// Multiselect.prototype = {
+//     open: function(that) {
+//         var target = $(that).parent().attr("data-target");
 
-        $(this.selector + ".multiselect").toggleClass("active");
-    },
+//         // If we are not keeping track of this one's entries, then
+//         // start doing so.
+//         if(!this.selections) {
+//             this.selections = [ ];
+//         }
 
-    close: function() {
-        $(this.selector + ".multiselect").removeClass("active");
-    },
+//         $(this.selector + ".multiselect").toggleClass("active");
+//     },
 
-    events: function() {
-        var that = this;
+//     close: function() {
+//         $(this.selector + ".multiselect").removeClass("active");
+//     },
 
-        $(document).on("click", that.selector + ".multiselect > .title", function(e) {
-            if(e.target.className.indexOf("close-icon") < 0) {
-                that.open();
-            }
-        });
+//     events: function() {
+//         var that = this;
 
-        $(document).on("click", that.selector + ".multiselect option", function(e) {
-            var selection = $(this).attr("value");
-            var target = $(this).parent().parent().attr("data-target");
+//         $(document).on("click", that.selector + ".multiselect > .title", function(e) {
+//             if(e.target.className.indexOf("close-icon") < 0) {
+//                 that.open();
+//             }
+//         });
 
-            var io = that.selections.search(selection);
+//         $(document).on("click", that.selector + ".multiselect option", function(e) {
+//             var selection = $(this).attr("value");
+//             var target = $(this).parent().parent().attr("data-target");
 
-            if(io < 0) that.selections.push(selection);
-            else that.selections.splice(io, 1);
+//             var io = that.selections.search(selection);
 
-            that.selectionStatus();
-            that.setSelectionsString();
-        });
+//             if(io < 0) that.selections.push(selection);
+//             else that.selections.splice(io, 1);
 
-        $(document).on("click", that.selector + ".multiselect > .title > .close-icon", function(e) {
-            that.clearSelections();
-        });
+//             that.selectionStatus();
+//             that.setSelectionsString();
+//         });
 
-        $(document).click(function(e) {
-            if(e.target.className.indexOf("title") < 0) {
-                if(e.target.className.indexOf("text") < 0) {
-                    if(e.target.className.indexOf("-icon") < 0) {
-                        if(e.target.className.indexOf("selected") < 0 ||
-                           e.target.localName != "option") {
-                            that.close();
-                        }
-                    }
-                }
-            }
-        });
-    },
+//         $(document).on("click", that.selector + ".multiselect > .title > .close-icon", function(e) {
+//             that.clearSelections();
+//         });
 
-    selectionStatus: function() {
-        var obj = $(this.selector + ".multiselect");
+//         $(document).click(function(e) {
+//             if(e.target.className.indexOf("title") < 0) {
+//                 if(e.target.className.indexOf("text") < 0) {
+//                     if(e.target.className.indexOf("-icon") < 0) {
+//                         if(e.target.className.indexOf("selected") < 0 ||
+//                            e.target.localName != "option") {
+//                             that.close();
+//                         }
+//                     }
+//                 }
+//             }
+//         });
+//     },
 
-        if(this.selections.length) obj.addClass("selection");
-        else obj.removeClass("selection");
-    },
+//     selectionStatus: function() {
+//         var obj = $(this.selector + ".multiselect");
 
-    clearSelections: function() {
-        this.selections = [];
-        this.selectionStatus();
-        this.setSelectionsString();
-    },
+//         if(this.selections.length) obj.addClass("selection");
+//         else obj.removeClass("selection");
+//     },
 
-    getSelections: function() {
-        return this.selections;
-    },
+//     clearSelections: function() {
+//         this.selections = [];
+//         this.selectionStatus();
+//         this.setSelectionsString();
+//     },
 
-    setSelectionsString: function() {
-        var selects = this.getSelectionsString().split(", ");
-        $(this.selector + ".multiselect > .title").attr("title", selects);
+//     getSelections: function() {
+//         return this.selections;
+//     },
 
-        var opts = $(this.selector + ".multiselect option");
+//     setSelectionsString: function() {
+//         var selects = this.getSelectionsString().split(", ");
+//         $(this.selector + ".multiselect > .title").attr("title", selects);
 
-        if(selects.length > 6) {
-            var _selects = this.getSelectionsString().split(", ");
-            _selects = _selects.splice(0, 6);
-            $(this.selector + ".multiselect > .title > .text")
-                .text(_selects + " [...]");
-        }
-        else {
-            $(this.selector + ".multiselect > .title > .text")
-                .text(selects);
-        }
+//         var opts = $(this.selector + ".multiselect option");
 
-        for(var i = 0; i < opts.length; i++) {
-            $(opts[i]).removeClass("selected");
-        }
+//         if(selects.length > 6) {
+//             var _selects = this.getSelectionsString().split(", ");
+//             _selects = _selects.splice(0, 6);
+//             $(this.selector + ".multiselect > .title > .text")
+//                 .text(_selects + " [...]");
+//         }
+//         else {
+//             $(this.selector + ".multiselect > .title > .text")
+//                 .text(selects);
+//         }
 
-        for(var j = 0; j < selects.length; j++) {
-            var select = selects[j];
+//         for(var i = 0; i < opts.length; i++) {
+//             $(opts[i]).removeClass("selected");
+//         }
 
-            for(var i = 0; i < opts.length; i++) {
-                if($(opts[i]).attr("value") == select) {
-                    $(opts[i]).addClass("selected");
-                    break;
-                }
-            }
-        }
-    },
+//         for(var j = 0; j < selects.length; j++) {
+//             var select = selects[j];
 
-    getSelectionsString: function() {
-        if(this.selections.length > 0)
-            return this.selections.join(", ");
-        else return "Select";
-    },
+//             for(var i = 0; i < opts.length; i++) {
+//                 if($(opts[i]).attr("value") == select) {
+//                     $(opts[i]).addClass("selected");
+//                     break;
+//                 }
+//             }
+//         }
+//     },
 
-    setSelections: function(arr) {
-        if(!arr[0]) {
-            error("ERROR: This does not look like an array.");
-            return;
-        }
+//     getSelectionsString: function() {
+//         if(this.selections.length > 0)
+//             return this.selections.join(", ");
+//         else return "Select";
+//     },
 
-        this.selections = arr;
-        this.selectionStatus();
-        this.setSelectionsString();
-    },
-};
+//     setSelections: function(arr) {
+//         if(!arr[0]) {
+//             error("ERROR: This does not look like an array.");
+//             return;
+//         }
 
-$(document).ready(function() {
-    var multi = new Multiselect("#languages");
-});
+//         this.selections = arr;
+//         this.selectionStatus();
+//         this.setSelectionsString();
+//     },
+// };
+
+// $(document).ready(function() {
+//     var multi = new Multiselect("#languages");
+// });
