@@ -10,6 +10,7 @@
         font-family: 'JetBrains Mono', monospace;
       }
     </style>
+    <script src="multiselect.js"></script>
   </head>
   <body>
     <div class="logo"> 
@@ -21,14 +22,22 @@
 
     <script src="popup.js"></script>
 
-    <div class="dropdown">
-      <button class="dropbtn">Select Language</button>
-      <div class="dropdown-content">
-        <a href="#">Hindi</a>
-        <a href="#">Tamil</a>
-        <a href="#">Marathi</a>
-        <a href="#">Telugu</a>
-        <a href="#">Bangla</a>
+    <div class="multiselect" id="languages" multiple="multiple" data-target="multi-0">
+      <div class="title noselect">
+          <span class="text">Select languages</span>
+          <span class="close-icon">&times;</span>
+          <span class="expand-icon">&plus;</span>
+      </div>
+      <div class="container">
+          <option value="hindi">Hindi</option>
+          <option value="bengali">Bengali</option>
+          <option value="marathi">Marathi</option>
+          <option value="tamil">Tamil</option>
+          <option value="telugu">Telugu</option>
+          <option value="urdu">Urdu</option>
+          <option value="assamese">Assamese</option>
+          <option value="ch"></option>
+          <option value="jp">Japan</option>
       </div>
     </div>
     <!-- <img src="images/design.png" alt="design" class="bg"> -->
